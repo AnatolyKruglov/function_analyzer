@@ -28,7 +28,7 @@ def analyze(step, f, x, id, **kwargs):
         return analyze('Промежутки возрастания', f, x, id, **kwargs)
     elif step == 'Область значений':
         return analyze('Промежутки возрастания', f, x, id, **kwargs)
-        
+
     loc = (int(f==f.subs(x,-x)),int(-f==f.subs(x,-x)))
     symmetry = np.array([
         ['общ. вида', 'нечетная'],
@@ -54,8 +54,8 @@ def analyze(step, f, x, id, **kwargs):
     steps['Промежутки убывания'] = Union(*dec, steps['Экстремумы']) if dec else None
     steps['Промежутки возрастания'] = Union(*inc, steps['Экстремумы']) if inc else None
 
-    steps['Асимптоты'] = 
-    
+    # steps['Асимптоты'] = 
+
     if step in steps:
         printed = pretty(steps[step])
         if "\n" in printed:
@@ -64,7 +64,7 @@ def analyze(step, f, x, id, **kwargs):
             bot.send_message(id, f"{step}: " + printed)
     else:
         bot.send_message(id, 'Не понял вас( опечатка?')
-        
+
 def graph(f, x, id, graph_start=-10, graph_end=10, graph_density=100, graph_derivatives=False, **kwargs):
     xs = list(filter(lambda n: n in continuous_domain(f, x, S.Reals), list(np.linspace(graph_start, graph_end, graph_density))))
     g = lambdify(x, f)
@@ -103,9 +103,9 @@ def full_analysis(f, x, id, **kwargs):
 
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
-	bot.reply_to(message, 
+	bot.reply_to(message,
         "Просто отправьте функцию, которую нужно исследовать, в любом формате\n\n"
-        "Сейчас поддерживаю\n" 
+        "Сейчас поддерживаю\n"
         "● полиномы: x^2, x**3, 1/x + x ...\n"
         "● логарифмы: ln(x), log(x), log(x, 10) ...\n"
         "● показательные: exp(x), 3**x, e^x ...\n"
@@ -114,7 +114,7 @@ def send_welcome(message):
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
-    try:  
+    try:
         sp = message.text.split(',')
         expr = sp[0].split('=')[-1]\
             .replace('^','**')\
